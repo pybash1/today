@@ -1,65 +1,96 @@
-import Link from "next/link";
+"use client";
 
-import { CreatePost } from "~/app/_components/create-post";
-import { api } from "~/trpc/server";
+import { useState } from "react";
 
-export default async function Home() {
-  const hello = await api.post.hello.query({ text: "from tRPC" });
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export default function Home() {
+  const [menu, setMenu] = useState(false);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <main className="flex min-h-screen flex-col bg-[#020202] px-48 py-10 text-white">
+      <div className="text-5xl text-red-600">Today</div>
+      <div className="text-2xl uppercase">
+        {MONTHS[new Date().getMonth()]} '
+        {new Date().toLocaleDateString(undefined, { year: "2-digit" })}
+      </div>
+      <div className="pt-24">
+        <div className="text-3xl">Start working on Today</div>
+        <div className="text-3xl line-through decoration-red-600 decoration-[5px]">
+          Wake up in the middle of the night
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-2xl text-white">
-            {hello ? hello.greeting : "Loading tRPC query..."}
-          </p>
+      </div>
+      <div
+        className={`fixed bottom-0 right-0 top-0 flex w-96 flex-col gap-4 bg-red-600 p-10 transition duration-300 ease-in-out ${
+          menu ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <div className="text-4xl text-white">Productivity</div>
+        <div className="text-6xl text-black">6.9</div>
+        <div className="text-xl text-black">
+          Average tasks completed
+          <br />
+          over the last week
         </div>
-
-        <CrudShowcase />
+        <div className="text-6xl text-black">69</div>
+        <div className="text-xl text-black">Day streak</div>
+        <div className="text-6xl text-black">4.2</div>
+        <div className="text-xl text-black">
+          Average tasks missed
+          <br />
+          over the last week
+        </div>
+      </div>
+      <div className="absolute bottom-6 right-6 flex gap-4">
+        <button
+          className={`rounded-full bg-red-600 p-3 text-black outline-none`}
+          onClick={() => setMenu(!menu)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1}
+            stroke="currentColor"
+            className="h-6 w-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+        </button>
+        <button
+          className={`rounded-full bg-red-600 px-3.5 py-[1.125rem] outline-none`}
+          onClick={() => setMenu(!menu)}
+        >
+          <div
+            className={`h-px w-5 bg-black transition duration-300 ease-in-out ${
+              menu ? "translate-y-[3.5px] -rotate-45" : ""
+            }`}
+          ></div>
+          <div className="h-1.5"></div>
+          <div
+            className={`h-px w-5 bg-black transition duration-300 ease-in-out ${
+              menu ? "-translate-y-[3.5px] rotate-45" : ""
+            }`}
+          ></div>
+        </button>
       </div>
     </main>
-  );
-}
-
-async function CrudShowcase() {
-  const latestPost = await api.post.getLatest.query();
-
-  return (
-    <div className="w-full max-w-xs">
-      {latestPost ? (
-        <p className="truncate">Your most recent post: {latestPost.name}</p>
-      ) : (
-        <p>You have no posts yet.</p>
-      )}
-
-      <CreatePost />
-    </div>
   );
 }
