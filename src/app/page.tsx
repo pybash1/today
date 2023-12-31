@@ -22,6 +22,13 @@ export default function Home() {
       setTask("");
     },
   });
+  const { mutateAsync: deleteTask } = api.tasks.delete.useMutation({
+    onSuccess: () => {
+      void refetch();
+      void refetchUndone();
+      void refetchStats();
+    },
+  });
   const { mutateAsync: markDone } = api.tasks.markAsDone.useMutation({
     onSuccess: () => {
       void refetch();
@@ -35,7 +42,7 @@ export default function Home() {
   }, [creating]);
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#020202] px-48 py-10 text-white">
+    <main className="flex min-h-screen flex-col bg-[#020202] px-4 md:px-48 py-4 md:py-10 text-white">
       <div className="text-5xl text-red-600">Today</div>
       <div className="text-2xl uppercase">
         {MONTHS[new Date().getMonth()]} '
@@ -73,6 +80,10 @@ export default function Home() {
                   : ""
               }`}
               onClick={() => markDone({ id: task.key, status: task.done })}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                void deleteTask({ id: task.key });
+              }}
             >
               {task.task}
             </button>
@@ -91,6 +102,10 @@ export default function Home() {
                 : ""
             }`}
             onClick={() => markDone({ id: task.key, status: task.done })}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              void deleteTask({ id: task.key });
+            }}
           >
             {task.task}
           </button>
@@ -102,7 +117,7 @@ export default function Home() {
         }`}
       >
         <div className="text-4xl text-white">Productivity</div>
-        <div className="text-6xl text-black">{stats?.done}</div>
+        <div className="text-6xl text-black">{stats?.done || 0}</div>
         <div className="text-xl text-black">
           Average tasks completed
           <br />
@@ -110,7 +125,7 @@ export default function Home() {
         </div>
         <div className="text-6xl text-black">{stats?.streak}</div>
         <div className="text-xl text-black">Day streak</div>
-        <div className="text-6xl text-black">{stats?.undone}</div>
+        <div className="text-6xl text-black">{stats?.undone || 0}</div>
         <div className="text-xl text-black">
           Average tasks missed
           <br />
