@@ -117,7 +117,7 @@ export default function Home() {
         }`}
       >
         <div className="text-4xl text-white">Productivity</div>
-        <div className="text-6xl text-black">{stats?.done || 0}</div>
+        <div className="text-6xl text-black">{stats?.done ?? 0}</div>
         <div className="text-xl text-black">
           Average tasks completed
           <br />
@@ -125,7 +125,7 @@ export default function Home() {
         </div>
         <div className="text-6xl text-black">{stats?.streak}</div>
         <div className="text-xl text-black">Day streak</div>
-        <div className="text-6xl text-black">{stats?.undone || 0}</div>
+        <div className="text-6xl text-black">{stats?.undone ?? 0}</div>
         <div className="text-xl text-black">
           Average tasks missed
           <br />
