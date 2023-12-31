@@ -1,28 +1,22 @@
-# Create T3 App
+# Today
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+An as simple as it gets task manager without noise. No planning for tomorrow, no automations, no fancy features. Just tasks and some basic performance. Only if you want to see them. Self-hosted, so your data is your data. Works on [Deta](https://deta.space). No history of tasks, no future planning to waste time on, work on what is important today, and what you forgot yesterday.
 
-## What's next? How do I make an app with this?
+Want to use postgres? Well, too bad, you'll have to fork and edit it youreslf.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+And yes, it works on mobile.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## I'm too stupid to understand how it works
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+1. Click to mark as done or vice versa.
+2. Right click to delete.
+3. Click on "+" to create new task.
+4. Click on "=" to access statistics.
+    - Streak is the number of days you completed atleast 1 task at a stretch.
+    - Check the code for detailed calculations.
+5. Click on "X" to close the statistics pane.
+6. Defocus the input to cancel task creation.
 
-## Learn More
-
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### Screenshots
+![Screenshot 1](public/ss1.png)
+![Screenshot 2](public/ss2.png)
