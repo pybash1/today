@@ -8,7 +8,20 @@
  */
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
-import { ZodError } from "zod";
+import { ZodError, z } from "zod";
+import { Deta } from "base-safe";
+import { env } from "~/env";
+import { getDate } from "~/db.utils";
+
+const db = Deta(env.DETA_KEY).TypedBase(
+  "tasks",
+  z.object({
+    task: z.string(),
+    recurring: z.boolean(),
+    date: z.string().datetime().default(getDate()),
+    done: z.boolean(),
+  }),
+);
 
 /**
  * 1. CONTEXT
@@ -25,6 +38,7 @@ import { ZodError } from "zod";
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   return {
     ...opts,
+    db,
   };
 };
 
