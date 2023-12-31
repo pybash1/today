@@ -34,6 +34,12 @@ export const tasksRouter = createTRPCRouter({
       return ctx.db.update({ done: !input.status }, input.id);
     }),
 
+  delete: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.delete(input.id);
+    }),
+
   weeklyStats: publicProcedure.query(async ({ ctx }) => {
     const tasks = await ctx.db.fetch(createWeekQuery());
     const allTasks = (await ctx.db.fetch()).items;
